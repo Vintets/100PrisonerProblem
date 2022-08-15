@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '0')
+__version_info__ = ('0', '1', '1')
 __version__ = '.'.join(__version_info__)
 
 
@@ -118,6 +118,9 @@ class Room:
 
         return f'Открытых коробок: {self.get_count_open_boxes()}'
 
+    def prisoner_go(self, prisoner):
+        pass
+
 
 def get_strategy():
     strategy = None
@@ -155,16 +158,26 @@ def log_total_result(total_success, total_fail):
     cp.cprint(f'20Провал  ^4_{total_fail:>4}  ({(total_fail * 100 / cfg.NUMBER_OF_ITERATIONS):.2%})')
 
 
+def one_action_in_prison(prisoners, room):
+    result = False
+    for prisoner in prisoners:
+        if not room.prisoner_go(prisoner):
+            break
+    else:
+        result = True
+    print(room)
+    # print(f'Открытых коробок: {room.get_count_open_boxes()}')
+    return result
+
+
 def iterations(prisoners, room):
     total_success = 0
     total_fail = 0
     for iteration in range(cfg.NUMBER_OF_ITERATIONS):
-        result = False
         room.close_all_boxes()
-        room.boxes[10].opened = True
-        room.boxes[12].opened = True
-        print(room)
-        # print(f'Открытых коробок: {room.get_count_open_boxes()}')
+        # room.boxes[10].opened = True
+        # room.boxes[12].opened = True
+        result = one_action_in_prison(prisoners, room)
         log_result(iteration, result)
     return total_success, total_fail
 
