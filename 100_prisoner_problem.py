@@ -203,9 +203,8 @@ def iterations(prisoners, room):
 
 def main() -> None:
     seed(1)
-    strategy = get_strategy()
     prisoners = init_prisoners()
-    room = Room(boxes=init_boxes(), strategy=get_strategy)
+    room = Room(boxes=init_boxes(), strategy=get_strategy())
     # pprint(prisoners)
     total_success, total_fail = iterations(prisoners, room)
     log_total_result(total_success, total_fail)
