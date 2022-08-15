@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '1')
+__version_info__ = ('0', '1', '2')
 __version__ = '.'.join(__version_info__)
 
 
@@ -30,6 +30,7 @@ import time
 from pathlib import Path  # noqa: F401
 import shutil
 from dataclasses import dataclass
+from abc import ABC, abstractmethod
 from random import shuffle, seed
 from collections import Counter
 from pprint import pprint  # noqa: F401
@@ -57,12 +58,26 @@ class Box:
     opened: bool = False
 
 
-class StrategyRandom:
+class Strategy(ABC):
+    name = None
+
+    @abstractmethod
+    def next_box(self):
+        pass
+
+
+class StrategyRandom(Strategy):
     name = 'Random (Случайный выбор)'
 
+    def next_box(self):
+        pass
 
-class StrategyChainLength:
+
+class StrategyChainLength(Strategy):
     name = 'ChainLength (перевод вероятности к длине цепочек)'
+
+    def next_box(self):
+        pass
 
 
 class Room:
@@ -119,9 +134,11 @@ class Room:
         return f'Открытых коробок: {self.get_count_open_boxes()}'
 
     def prisoner_go(self, prisoner):
+        result = False
         if cfg.LOG_LEVEL > 1:
             print(room)
             # print(f'Открытых коробок: {room.get_count_open_boxes()}')
+        return result
 
 
 def get_strategy():
