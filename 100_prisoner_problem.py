@@ -31,7 +31,7 @@ from pathlib import Path  # noqa: F401
 import shutil
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from random import shuffle, seed
+from random import shuffle, seed, choice
 from collections import Counter
 from pprint import pprint  # noqa: F401
 # from typing import Optional
@@ -62,21 +62,21 @@ class Strategy(ABC):
     name = None
 
     @abstractmethod
-    def next_box(self):
+    def next_box(self, prisoner, closed_boxes):
         pass
 
 
 class StrategyRandom(Strategy):
     name = 'Random (Случайный выбор)'
 
-    def next_box(self):
-        pass
+    def next_box(self, prisoner, closed_boxes):
+        return choice(closed_boxes)
 
 
 class StrategyChainLength(Strategy):
     name = 'ChainLength (перевод вероятности к длине цепочек)'
 
-    def next_box(self):
+    def next_box(self, prisoner, closed_boxes):
         pass
 
 
