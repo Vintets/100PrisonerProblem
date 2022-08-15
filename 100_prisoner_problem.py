@@ -58,11 +58,11 @@ class Box:
 
 
 class StrategyRandom:
-    pass
+    name = 'Random (Случайный выбор)'
 
 
 class StrategyChainLength:
-    pass
+    name = 'ChainLength (перевод вероятности к длине цепочек)'
 
 
 class Room:
@@ -127,6 +127,7 @@ def get_strategy():
         strategy = StrategyChainLength()
     else:
         raise ValueError('Неправильно задан номер стратегии.')
+    cp.cprint(f'20Выбрана стратегия ^14_{strategy.name}')
     return strategy
 
 
