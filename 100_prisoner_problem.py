@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '2')
+__version_info__ = ('0', '1', '3')
 __version__ = '.'.join(__version_info__)
 
 
@@ -133,8 +133,23 @@ class Room:
 
         return f'Открытых коробок: {self.get_count_open_boxes()}'
 
+    def get_closed_boxes(self):
+        return [box for box in self.boxes if not box.opened]
+
+    def open_box(self, box):
+        box.opened = True
+        return box.number_on_paper
+
     def prisoner_go(self, prisoner):
         result = False
+        # print(type(self.strategy))
+        next_box = self.strategy.next_box(prisoner, closed_boxes=self.get_closed_boxes())
+        number_on_paper = self.open_box(next_box)
+        print(f'{next_box}')
+        print(f'{number_on_paper = }')
+        
+        print(self)
+        
         if cfg.LOG_LEVEL > 1:
             print(room)
             # print(f'Открытых коробок: {room.get_count_open_boxes()}')
