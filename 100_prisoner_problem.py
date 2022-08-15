@@ -119,7 +119,9 @@ class Room:
         return f'Открытых коробок: {self.get_count_open_boxes()}'
 
     def prisoner_go(self, prisoner):
-        pass
+        if cfg.LOG_LEVEL > 1:
+            print(room)
+            # print(f'Открытых коробок: {room.get_count_open_boxes()}')
 
 
 def get_strategy():
@@ -145,6 +147,8 @@ def init_boxes():
 
 
 def log_result(iteration, result):
+    if cfg.LOG_LEVEL < 1:
+        return
     if result:
         cp.cprint(f'20Итерация ^15_{iteration:>4}^20_, ^2_успех, заключённые на свободе')
     else:
@@ -165,8 +169,6 @@ def one_action_in_prison(prisoners, room):
             break
     else:
         result = True
-    print(room)
-    # print(f'Открытых коробок: {room.get_count_open_boxes()}')
     return result
 
 
