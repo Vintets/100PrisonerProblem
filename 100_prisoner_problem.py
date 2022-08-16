@@ -142,7 +142,7 @@ class Room:
 
     def prisoner_go(self, prisoner):
         result = False
-        if cfg.LOG_LEVEL > 1:
+        if cfg.LOG_LEVEL > 2:
             print(f'\nЗаключённый {prisoner.id}')
         for i in range(int(cfg.NUMBER_OF_PRISONERS / 2)):
             next_box = self.strategy.next_box(prisoner, closed_boxes=self.get_closed_boxes())
@@ -156,6 +156,7 @@ class Room:
                 break
         else:
             if cfg.LOG_LEVEL > 1 and cfg.LOG_LEVEL != 5:
+                print(f'\nЗаключённый {prisoner.id}')
                 print(self)
 
         if cfg.LOG_LEVEL > 4:
