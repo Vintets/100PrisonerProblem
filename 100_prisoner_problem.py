@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '5')
+__version_info__ = ('0', '1', '6')
 __version__ = '.'.join(__version_info__)
 
 
@@ -198,8 +198,8 @@ def log_result(iteration, result, success_prisoners):
 def log_total_result(total_success, total_fail):
     print('=' * WIDTH_CONSOL)
     cp.cprint(f'20Всего итераций ^15_{cfg.NUMBER_OF_ITERATIONS}')
-    cp.cprint(f'20Успешно ^2_{total_success:>4}  ({(total_success * 100 / cfg.NUMBER_OF_ITERATIONS):.2%})')
-    cp.cprint(f'20Провал  ^4_{total_fail:>4}  ({(total_fail * 100 / cfg.NUMBER_OF_ITERATIONS):.2%})')
+    cp.cprint(f'20Успешно ^2_{total_success:>4}  ({(total_success / cfg.NUMBER_OF_ITERATIONS):.2%})')
+    cp.cprint(f'20Провал  ^4_{total_fail:>4}  ({(total_fail / cfg.NUMBER_OF_ITERATIONS):.2%})')
 
 
 def one_action_in_prison(prisoners, room):
