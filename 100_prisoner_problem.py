@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '2', '2')
+__version_info__ = ('0', '2', '3')
 __version__ = '.'.join(__version_info__)
 
 
@@ -61,21 +61,21 @@ class Strategy(ABC):
     name = None
 
     @abstractmethod
-    def next_box(self, prisoner, closed_boxes):
+    def next_box(self, last_id, closed_boxes):
         pass
 
 
 class StrategyRandom(Strategy):
     name = 'Random (Случайный выбор)'
 
-    def next_box(self, prisoner, closed_boxes):
+    def next_box(self, last_id, closed_boxes):
         return choice(closed_boxes)
 
 
 class StrategyChainLength(Strategy):
     name = 'ChainLength (перевод вероятности к длине цепочек)'
 
-    def next_box(self, prisoner, closed_boxes):
+    def next_box(self, last_id, closed_boxes):
         pass
 
 
