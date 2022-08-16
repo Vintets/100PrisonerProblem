@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '6')
+__version_info__ = ('0', '2', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -216,12 +216,11 @@ def one_action_in_prison(prisoners, room):
     return result, success_prisoners
 
 
-def iterations(prisoners, room):
+def iterations(prisoners):
     total_success = 0
     total_fail = 0
     for iteration in range(cfg.NUMBER_OF_ITERATIONS):
-        # room.boxes[10].opened = True
-        # room.boxes[12].opened = True
+        room = Room(boxes=init_boxes(), strategy=get_strategy())
         result, success_prisoners = one_action_in_prison(prisoners, room)
         log_result(iteration, result, success_prisoners)
         if result:
@@ -234,9 +233,8 @@ def iterations(prisoners, room):
 def main() -> None:
     seed(1)
     prisoners = init_prisoners()
-    room = Room(boxes=init_boxes(), strategy=get_strategy())
     # pprint(prisoners)
-    total_success, total_fail = iterations(prisoners, room)
+    total_success, total_fail = iterations(prisoners)
     log_total_result(total_success, total_fail)
 
 
