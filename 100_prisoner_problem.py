@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '4')
+__version_info__ = ('0', '1', '5')
 __version__ = '.'.join(__version_info__)
 
 
@@ -185,7 +185,7 @@ def init_boxes():
     return list([Box(id=i, number_on_paper=numbers[i-1]) for i in range(1, cfg.NUMBER_OF_PRISONERS + 1)])
 
 
-def log_result(iteration, result):
+def log_result(iteration, result, success_prisoners):
     if cfg.LOG_LEVEL < 1:
         return
     if result:
@@ -203,23 +203,29 @@ def log_total_result(total_success, total_fail):
 
 def one_action_in_prison(prisoners, room):
     result = False
+    success_prisoners = 0
     for prisoner in prisoners:
         if not room.prisoner_go(prisoner):
             break
+        success_prisoners += 1
+        room.close_all_boxes()
     else:
         result = True
-    return result
+    return result, success_prisoners
 
 
 def iterations(prisoners, room):
     total_success = 0
     total_fail = 0
     for iteration in range(cfg.NUMBER_OF_ITERATIONS):
-        room.close_all_boxes()
         # room.boxes[10].opened = True
         # room.boxes[12].opened = True
-        result = one_action_in_prison(prisoners, room)
-        log_result(iteration, result)
+        result, success_prisoners = one_action_in_prison(prisoners, room)
+        log_result(iteration, result, success_prisoners)
+        if result:
+            total_success += 1
+        else:
+            total_fail += 1
     return total_success, total_fail
 
 
