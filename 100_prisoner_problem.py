@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '2', '1')
+__version_info__ = ('0', '2', '2')
 __version__ = '.'.join(__version_info__)
 
 
@@ -203,16 +203,17 @@ def log_total_result(total_success, total_fail):
 
 
 def one_action_in_prison(prisoners, room):
-    result = False
+    fail = False
     success_prisoners = 0
     for prisoner in prisoners:
-        if not room.prisoner_go(prisoner):
-            break
-        success_prisoners += 1
+        if room.prisoner_go(prisoner):
+            success_prisoners += 1
+        else:
+            fail = True
+            if cfg.BREAK_IF_FALSE:
+                break
         room.close_all_boxes()
-    else:
-        result = True
-    return result, success_prisoners
+    return not fail, success_prisoners
 
 
 def iterations(prisoners, strategy):
