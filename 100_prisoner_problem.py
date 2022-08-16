@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '2', '0')
+__version_info__ = ('0', '2', '1')
 __version__ = '.'.join(__version_info__)
 
 
@@ -32,7 +32,6 @@ import shutil
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from random import shuffle, seed, choice
-from collections import Counter
 from pprint import pprint  # noqa: F401
 # from typing import Optional
 import configs.config as cfg
@@ -216,11 +215,11 @@ def one_action_in_prison(prisoners, room):
     return result, success_prisoners
 
 
-def iterations(prisoners):
+def iterations(prisoners, strategy):
     total_success = 0
     total_fail = 0
     for iteration in range(cfg.NUMBER_OF_ITERATIONS):
-        room = Room(boxes=init_boxes(), strategy=get_strategy())
+        room = Room(boxes=init_boxes(), strategy=strategy)
         result, success_prisoners = one_action_in_prison(prisoners, room)
         log_result(iteration, result, success_prisoners)
         if result:
@@ -234,7 +233,8 @@ def main() -> None:
     seed(1)
     prisoners = init_prisoners()
     # pprint(prisoners)
-    total_success, total_fail = iterations(prisoners)
+    strategy = get_strategy()
+    total_success, total_fail = iterations(prisoners, strategy)
     log_total_result(total_success, total_fail)
 
 
