@@ -188,10 +188,11 @@ def init_boxes():
 def log_result(iteration, result, success_prisoners):
     if cfg.LOG_LEVEL < 1:
         return
+    text_base = f'20Итерация ^15_{iteration + 1:>4}^20_, удачных заключённых ^14_{success_prisoners:>3}, '
     if result:
-        cp.cprint(f'20Итерация ^15_{iteration:>4}^20_, ^2_успех, заключённые на свободе')
+        cp.cprint(f'{text_base}^2_успех, заключённые на свободе')
     else:
-        cp.cprint(f'20Итерация ^15_{iteration:>4}^20_, ^4_неудача, заключённые казнены')
+        cp.cprint(f'{text_base}^4_неудача, заключённые казнены')
 
 
 def log_total_result(total_success, total_fail):
