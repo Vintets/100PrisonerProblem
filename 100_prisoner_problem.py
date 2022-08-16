@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '1', '3')
+__version_info__ = ('0', '1', '4')
 __version__ = '.'.join(__version_info__)
 
 
@@ -142,17 +142,24 @@ class Room:
 
     def prisoner_go(self, prisoner):
         result = False
-        # print(type(self.strategy))
-        next_box = self.strategy.next_box(prisoner, closed_boxes=self.get_closed_boxes())
-        number_on_paper = self.open_box(next_box)
-        print(f'{next_box}')
-        print(f'{number_on_paper = }')
-        
-        print(self)
-        
         if cfg.LOG_LEVEL > 1:
-            print(room)
-            # print(f'Открытых коробок: {room.get_count_open_boxes()}')
+            print(f'\nЗаключённый {prisoner.id}')
+        for i in range(int(cfg.NUMBER_OF_PRISONERS / 2)):
+            next_box = self.strategy.next_box(prisoner, closed_boxes=self.get_closed_boxes())
+            number_on_paper = self.open_box(next_box)
+            if cfg.LOG_LEVEL > 3:
+                print(f'{next_box}  {number_on_paper = }')
+            if number_on_paper == prisoner.id:
+                result = True
+                if cfg.LOG_LEVEL > 2:
+                    print(f'Открытых коробок: {self.get_count_open_boxes()}')
+                break
+        else:
+            if cfg.LOG_LEVEL > 1 and cfg.LOG_LEVEL != 5:
+                print(self)
+
+        if cfg.LOG_LEVEL > 4:
+            print(self)
         return result
 
 
