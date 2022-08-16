@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '2', '3')
+__version_info__ = ('0', '2', '4')
 __version__ = '.'.join(__version_info__)
 
 
@@ -132,6 +132,17 @@ class Room:
 
         return f'Открытых коробок: {self.get_count_open_boxes()}'
 
+    def field_log(self, prisoner_id, fail):
+        if cfg.LOG_FIELD == 0:
+            return
+        if cfg.LOG_LEVEL < 2:
+            print(f'\nЗаключённый {prisoner_id}')
+
+        if fail and cfg.LOG_FIELD == 1:
+            print(self)
+        if (not fail) and cfg.LOG_FIELD == 2:
+            print(self)
+
     def get_closed_boxes(self):
         return [box for box in self.boxes if not box.opened]
 
@@ -141,25 +152,30 @@ class Room:
 
     def prisoner_go(self, prisoner):
         result = False
-        if cfg.LOG_LEVEL > 2:
+        if cfg.LOG_LEVEL > 1:
             print(f'\nЗаключённый {prisoner.id}')
+        last_id = prisoner.id
         for i in range(int(cfg.NUMBER_OF_PRISONERS / 2)):
-            next_box = self.strategy.next_box(prisoner, closed_boxes=self.get_closed_boxes())
+            next_box = self.strategy.next_box(last_id, closed_boxes=self.get_closed_boxes())
             number_on_paper = self.open_box(next_box)
-            if cfg.LOG_LEVEL > 3:
+            last_id = number_on_paper
+            if cfg.LOG_LEVEL > 2:
                 print(f'{next_box}  {number_on_paper = }')
             if number_on_paper == prisoner.id:
                 result = True
-                if cfg.LOG_LEVEL > 2:
-                    print(f'Открытых коробок: {self.get_count_open_boxes()}')
                 break
         else:
-            if cfg.LOG_LEVEL > 1 and cfg.LOG_LEVEL != 5:
-                print(f'\nЗаключённый {prisoner.id}')
-                print(self)
+            self.field_log(prisoner.id, fail=True)
 
-        if cfg.LOG_LEVEL > 4:
-            print(self)
+
+        if (cfg.LOG_LEVEL > 1
+                and (cfg.LOG_FIELD == 0
+                    or not (cfg.LOG_FIELD == 1 and not result)
+                    )
+                ):
+            print(f'Открытых коробок: {self.get_count_open_boxes()}')
+
+        self.field_log(prisoner.id, fail=False)
         return result
 
 
