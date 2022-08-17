@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('1', '0', '0')
+__version_info__ = ('1', '1', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -120,11 +120,13 @@ class Room:
            │ 100 │
            └─────┘'''
 
-        s_up = (' ' * cfg.INDENT_HORIZONTAL + '┌─────┐') * 10
-        s_md = (' ' * cfg.INDENT_HORIZONTAL + '├─────┤') * 10
-        s_dn = (' ' * cfg.INDENT_HORIZONTAL + '└─────┘') * 10
+        max_row = max(min(10, cfg.NUMBER_OF_PRISONERS // 10), 1)
+        max_col = cfg.NUMBER_OF_PRISONERS if cfg.NUMBER_OF_PRISONERS < 10 else 10
+        s_up = (' ' * cfg.INDENT_HORIZONTAL + '┌─────┐') * max_col
+        s_md = (' ' * cfg.INDENT_HORIZONTAL + '├─────┤') * max_col
+        s_dn = (' ' * cfg.INDENT_HORIZONTAL + '└─────┘') * max_col
         graph = []
-        for row in range(10):
+        for row in range(max_row):
             graph.append(s_up)
             graph.append(self.get_line_box_data(row, property='id'))
             graph.append(s_md)
