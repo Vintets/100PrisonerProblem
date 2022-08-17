@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('1', '1', '0')
+__version_info__ = ('1', '1', '1')
 __version__ = '.'.join(__version_info__)
 
 
@@ -253,6 +253,7 @@ def main() -> None:
     prisoners = init_prisoners()
     # pprint(prisoners)
     strategy = get_strategy()
+    cp.cprint(f'20Заключённых: ^14_{cfg.NUMBER_OF_PRISONERS}')
     total_success, total_fail = iterations(prisoners, strategy)
     log_total_result(total_success, total_fail)
 
