@@ -43,7 +43,7 @@ python3 100_prisoner_problem.py
 100 заключённых
 20 итераций
 
-![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/{path}/Demo_1.png)
+![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/Demo_1.png)
 
 ## Структура скрипта
 
