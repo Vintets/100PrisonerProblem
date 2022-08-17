@@ -38,12 +38,20 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 python3 100_prisoner_problem.py
 ```
 
-## Скриншот
+## Скриншоты
 
 100 заключённых
-20 итераций
 
-![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/Demo_1.png)
+20 итераций
+![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_20.png)
+
+1000 итераций
+![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_1000.png)
+
+10000 итераций
+![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_10000.png)
+
+![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_2022-08-17.png)
 
 ## Структура скрипта
 

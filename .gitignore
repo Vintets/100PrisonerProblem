@@ -25,4 +25,4 @@ Thumbs.db
 Очистка_компил_py3.bat
 *.png
 *.jpg
-!Demo_1.png
+!/screenshots/*.png
