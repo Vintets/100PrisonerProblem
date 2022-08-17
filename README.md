@@ -40,17 +40,16 @@ python3 100_prisoner_problem.py
 
 ## Скриншоты
 
-100 заключённых
-
-20 итераций
+20 итераций  100 заключённых
 ![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_20.png)
 
-1000 итераций
+1000 итераций  100 заключённых
 ![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_1000.png)
 
-10000 итераций
+10000 итераций  100 заключённых
 ![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_10000.png)
 
+пример работы скрипта
 ![Скриншот работы скрипта](https://github.com/Vintets/100PrisonerProblem/raw/master/screenshots/Demo_2022-08-17.png)
 
 ## Структура скрипта
