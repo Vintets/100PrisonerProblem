@@ -13,7 +13,9 @@ ignore =
     # E501 line too long (> 79 characters)
     E501,
     # W504 line break after binary operator
-    W504
+    W504,
     # F541 f-string is missing placeholders
-    F541
+    F541,
+    # type annotations
+    TAE001
 exclude = .git,.vscode,__pycache__,env,venv,logs,z100PrisonerProblem_development,*.db,*.bat,*.png,*.jpg

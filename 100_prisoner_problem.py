@@ -20,18 +20,17 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('1', '2', '0')
+__version_info__ = ('1', '2', '1')
 __version__ = '.'.join(__version_info__)
 
 
 import os
 import sys
-import time
 from pathlib import Path  # noqa: F401
 import shutil
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from random import shuffle, seed, choice
+from random import shuffle, seed, choice  # noqa: F401
 from pprint import pprint  # noqa: F401
 # from typing import Optional
 import configs.config as cfg
@@ -47,12 +46,12 @@ WIDTH_CONSOL = shutil.get_terminal_size().columns
 
 @dataclass
 class Prisoner:
-    id: int
+    ids: int
 
 
 @dataclass
 class Box:
-    id: int
+    ids: int
     number_on_paper: int
     opened: bool = False
 
@@ -95,15 +94,15 @@ class Room:
     def get_count_open_boxes(self):
         return sum(1 for box in self.boxes if box.opened)
 
-    def get_line_box_data(self, row, property):
+    def get_line_box_data(self, row, property_):
         indent = ' ' * cfg.INDENT_HORIZONTAL
         line_data = []
         for col in range(10):
             el = row * 10 + col
             box = self.boxes[el]
-            # data = box.id if property == 'id' else box.number_on_paper
-            if property == 'id':
-                data = box.id
+            # data = box.ids if property_ == 'id' else box.number_on_paper
+            if property_ == 'id':
+                data = box.ids
                 color_text = cfg.COLOR_NUM_BOX
             else:
                 data = box.number_on_paper
@@ -128,11 +127,11 @@ class Room:
         graph = []
         for row in range(max_row):
             graph.append(s_up)
-            graph.append(self.get_line_box_data(row, property='id'))
+            graph.append(self.get_line_box_data(row, property_='id'))
             graph.append(s_md)
-            graph.append(self.get_line_box_data(row, property='number_on_paper'))
+            graph.append(self.get_line_box_data(row, property_='number_on_paper'))
             graph.append(s_dn)
-            for i in range(cfg.INDENT_VERTICAL):
+            for _i in range(cfg.INDENT_VERTICAL):
                 graph.append('')
         cp.cprint('\n'.join(graph))
 
@@ -156,28 +155,25 @@ class Room:
     def prisoner_go(self, prisoner):
         result = False
         if cfg.LOG_LEVEL > 1:
-            print(f'\nЗаключённый {prisoner.id}')
-        last_id = prisoner.id
-        for i in range(int(cfg.NUMBER_OF_PRISONERS / 2)):
+            print(f'\nЗаключённый {prisoner.ids}')
+        last_id = prisoner.ids
+        for _i in range(int(cfg.NUMBER_OF_PRISONERS / 2)):
             next_box = self.strategy.next_box(last_id, boxes=self.boxes)
             number_on_paper = self.open_box(next_box)
             last_id = number_on_paper
             if cfg.LOG_LEVEL > 2:
                 print(f'{next_box}')
-            if number_on_paper == prisoner.id:
+            if number_on_paper == prisoner.ids:
                 result = True
                 break
         else:
-            self.field_log(prisoner.id, fail=True)
+            self.field_log(prisoner.ids, fail=True)
 
-        if (cfg.LOG_LEVEL > 1
-                and (cfg.LOG_FIELD == 0
-                    or not (cfg.LOG_FIELD == 1 and not result)
-                    )
-                ):
+        if (cfg.LOG_LEVEL > 1 and
+           (cfg.LOG_FIELD == 0 or not (cfg.LOG_FIELD == 1 and not result))):
             print(f'Открытых коробок: {self.get_count_open_boxes()}')
 
-        self.field_log(prisoner.id, fail=False)
+        self.field_log(prisoner.ids, fail=False)
         return result
 
 
@@ -194,13 +190,13 @@ def get_strategy():
 
 
 def init_prisoners():
-    return list([Prisoner(id=i) for i in range(1, cfg.NUMBER_OF_PRISONERS + 1)])
+    return list([Prisoner(ids=i) for i in range(1, cfg.NUMBER_OF_PRISONERS + 1)])
 
 
 def init_boxes():
     numbers = list(range(1, cfg.NUMBER_OF_PRISONERS + 1))
     shuffle(numbers)
-    return list([Box(id=i, number_on_paper=numbers[i-1]) for i in range(1, cfg.NUMBER_OF_PRISONERS + 1)])
+    return list([Box(ids=i, number_on_paper=numbers[i - 1]) for i in range(1, cfg.NUMBER_OF_PRISONERS + 1)])
 
 
 def log_result(iteration, result, success_prisoners):
