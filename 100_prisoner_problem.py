@@ -161,7 +161,7 @@ class Room:
             number_on_paper = self.open_box(next_box)
             last_id = number_on_paper
             if cfg.LOG_LEVEL > 2:
-                print(f'{next_box}  {number_on_paper = }')
+                print(f'{next_box}')
             if number_on_paper == prisoner.id:
                 result = True
                 break
