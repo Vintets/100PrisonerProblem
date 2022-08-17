@@ -6,10 +6,10 @@
 NUMBER_OF_PRISONERS = 100
 
 # количество итераций (прогонов)
-NUMBER_OF_ITERATIONS = 10
+NUMBER_OF_ITERATIONS = 20
 
 # Метод действий: 1 - random, 2 - длина цепочек из ролика
-METHOD = 1
+METHOD = 2
 
 # уровень лога, чем больше, тем детальней
 '''
