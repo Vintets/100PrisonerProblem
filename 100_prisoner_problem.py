@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('0', '2', '4')
+__version_info__ = ('1', '0', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -80,7 +80,7 @@ class StrategyChainLength(Strategy):
     name = 'ChainLength (перевод вероятности к длине цепочек)'
 
     def next_box(self, last_id, boxes):
-        pass
+        return boxes[last_id - 1]
 
 
 class Room:
