@@ -60,22 +60,26 @@ class Box:
 class Strategy(ABC):
     name = None
 
+    def get_closed_boxes(self, boxes):
+        return [box for box in boxes if not box.opened]
+
     @abstractmethod
-    def next_box(self, last_id, closed_boxes):
+    def next_box(self, last_id, boxes):
         pass
 
 
 class StrategyRandom(Strategy):
     name = 'Random (Случайный выбор)'
 
-    def next_box(self, last_id, closed_boxes):
+    def next_box(self, last_id, boxes):
+        closed_boxes = self.get_closed_boxes(boxes)
         return choice(closed_boxes)
 
 
 class StrategyChainLength(Strategy):
     name = 'ChainLength (перевод вероятности к длине цепочек)'
 
-    def next_box(self, last_id, closed_boxes):
+    def next_box(self, last_id, boxes):
         pass
 
 
@@ -143,9 +147,6 @@ class Room:
         if (not fail) and cfg.LOG_FIELD == 2:
             print(self)
 
-    def get_closed_boxes(self):
-        return [box for box in self.boxes if not box.opened]
-
     def open_box(self, box):
         box.opened = True
         return box.number_on_paper
@@ -156,7 +157,7 @@ class Room:
             print(f'\nЗаключённый {prisoner.id}')
         last_id = prisoner.id
         for i in range(int(cfg.NUMBER_OF_PRISONERS / 2)):
-            next_box = self.strategy.next_box(last_id, closed_boxes=self.get_closed_boxes())
+            next_box = self.strategy.next_box(last_id, boxes=self.boxes)
             number_on_paper = self.open_box(next_box)
             last_id = number_on_paper
             if cfg.LOG_LEVEL > 2:
@@ -166,7 +167,6 @@ class Room:
                 break
         else:
             self.field_log(prisoner.id, fail=True)
-
 
         if (cfg.LOG_LEVEL > 1
                 and (cfg.LOG_FIELD == 0
