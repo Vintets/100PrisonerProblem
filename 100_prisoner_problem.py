@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=wWQ9YdreY9c
 # for python 3.9.7 and over
 """
 
-__version_info__ = ('1', '1', '1')
+__version_info__ = ('1', '2', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -249,7 +249,7 @@ def iterations(prisoners, strategy):
 
 
 def main() -> None:
-    seed(1)
+    # seed(1)
     prisoners = init_prisoners()
     # pprint(prisoners)
     strategy = get_strategy()
